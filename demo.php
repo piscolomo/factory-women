@@ -27,25 +27,24 @@ if( ! array_key_exists( 'factory-women', $GLOBALS ) ) {
 						add_options_page('Factory', 'Factory', 8, basename(__FILE__), array($this, 'factory_index'));
 					}
 				}
-        
-        public function add_welcome_message( $content ) {
-		         return 'TEST CONTENT' . $content;
-		    } // end add_welcome_message
 
 		    public function factory_index(){
-					include('template/index.html');			
-					global $wpdb; 
+					include('template/index.html');
 					$numberposts = $_POST['numberposts'];
 					$posttitle = $_POST['posttitle'];
 					if(isset($numberposts)){
-						for ($i=1; $i<=$numberposts; $i++){
-							$post = array(
-								'post_title' => "$posttitle $i",
-								'post_type' => "post",
-								'post_status' => "publish"
-							);
-							wp_insert_post( $post );
-						}
+						$this->insert_posts($numberposts, $posttitle);
+					}
+				}
+
+				public function insert_posts($n, $title){
+					for ($i=1; $i<=$n; $i++){
+						$post = array(
+							'post_title' => "$title $i",
+							'post_type' => "post",
+							'post_status' => "publish"
+						);
+						wp_insert_post( $post );
 					}
 				}
 
@@ -56,6 +55,3 @@ if( ! array_key_exists( 'factory-women', $GLOBALS ) ) {
     $GLOBALS['factory-women'] = new FactoryWomen();
      
 } // end if
-
-
-
