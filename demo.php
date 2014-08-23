@@ -32,3 +32,19 @@ if( ! array_key_exists( 'factory-women', $GLOBALS ) ) {
     $GLOBALS['factory-women'] = new FactoryWomen();
      
 } // end if
+
+
+function factory_index(){
+	include('template/index.html');			
+	global $wpdb; 
+}
+
+function factory_add_menu(){	
+	if (function_exists('add_options_page')) {
+		//add_menu_page
+		add_options_page('factory', 'factory', 8, basename(__FILE__), 'factory_index');
+	}
+}
+if (function_exists('add_action')) {
+	add_action('admin_menu', 'factory_add_menu'); 
+}
