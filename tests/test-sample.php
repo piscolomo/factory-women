@@ -7,15 +7,20 @@ class FactoryWomen_Tests extends WP_UnitTestCase {
     function setUp() {     
         parent::setUp();
         $this->plugin = $GLOBALS['factory-women'];
-    } // end setup
+        $this->plugin->insert_posts(5,"prueba");
+    }
      
     function testPluginInitialization() {
         $this->assertFalse( null == $this->plugin );
-    } // end testPluginInitialization
+    }
 
     function testInsertPosts() {
-        $this->plugin->insert_posts(5,"prueba");
-        $this->assertEquals( 5, wp_count_posts()->publish, 'there has been created your posts' );   
+        $this->assertEquals( 5, wp_count_posts()->publish);   
+    }
+
+    function testLastPostContainsTitle() {
+        $lastpost = wp_get_recent_posts(array( 'numberposts' => '1', 'order' => 'DESC'));
+        $this->assertContains("prueba", $lastpost[0]["post_title"]);
     } 
      
-} // end class
+}
