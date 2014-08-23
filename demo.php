@@ -37,12 +37,24 @@ if( ! array_key_exists( 'factory-women', $GLOBALS ) ) {
 function factory_index(){
 	include('template/index.html');			
 	global $wpdb; 
+	$numberposts = $_POST['numberposts'];
+	$posttitle = $_POST['posttitle'];
+	if(isset($numberposts)){
+		for ($i=1; $i<=$numberposts; $i++){
+			$post = array(
+				'post_title' => "$posttitle $i",
+				'post_type' => "post",
+				'post_status' => "publish"
+			);
+			wp_insert_post( $post );
+		}
+	}
 }
 
 function factory_add_menu(){	
 	if (function_exists('add_options_page')) {
 		//add_menu_page
-		add_options_page('factory', 'factory', 8, basename(__FILE__), 'factory_index');
+		add_options_page('Factory', 'Factory', 8, basename(__FILE__), 'factory_index');
 	}
 }
 if (function_exists('add_action')) {
