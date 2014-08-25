@@ -33,16 +33,17 @@ if( ! array_key_exists( 'factory-women', $GLOBALS ) ) {
 					$numberposts = $_POST['numberposts'];
 					$posttitle = $_POST['posttitle'];
 					$postcontent = $_POST['postcontent'];
+					$posttype = $_POST['posttype'];
 					if(isset($numberposts)){
-						$this->insert_posts($numberposts, $posttitle, $postcontent);
+						$this->insert_posts($numberposts, $posttype, $posttitle, $postcontent);
 					}
 				}
 
-				public function insert_posts($n, $title, $postcontent){
+				public function insert_posts($n, $posttype, $title, $postcontent){
 					for ($i=1; $i<=$n; $i++){
 						$post = array(
 							'post_title' => "$title $i",
-							'post_type' => "post",
+							'post_type' => "$posttype",
 							'post_content'  => $postcontent==null ? $this->getlipsum() : $postcontent,
 							'post_status' => "publish"
 						);
